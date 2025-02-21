@@ -7,6 +7,7 @@ from sklearn.metrics import accuracy_score, classification_report
 import smtplib
 from email.mime.text import MIMEText
 import cv2
+import joblib
 
 # Email setup (use environment variables or another secure method for credentials)
 def send_alert_notification(subject, message, recipient_email):
@@ -44,3 +45,23 @@ def detect_shop_theft(frame, model):
 # frame = cv2.imread('path_to_image.jpg')  # Replace with actual frame capture
 # if detect_shop_theft(frame, model):
 #     send_alert_notification("Theft Alert", "Theft has been detected in the store!", "recipient@example.com")
+
+def train_and_save_model(X_train, y_train, model_path):
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
+    joblib.dump(model, model_path)  # Save the trained model
+    return model
+
+if __name__ == "__main__":
+    # Load your data
+    # X, y = ...
+
+    # Split the data
+    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Train and save the model
+    model_path = "theft_detection_model.pkl"
+    model = train_and_save_model(X_train, y_train, model_path)
+
+    # Load the model
+    # loaded_model = joblib.load(model_path)
